@@ -1,0 +1,17 @@
+/Library/
+/Temp/
+/Obj/
+/Logs/
+/UserSettings/
+/Builds/
+/.vs/
+*.csproj
+!Tools/StaticCheck/StaticCheck.csproj
+*.sln
+*.user
+*.tmp
+/Tools/StaticCheck/bin/
+/Tools/StaticCheck/obj/
+**/__pycache__/
+
+/Tools/Dependencies/

@@ -1,0 +1,18 @@
+CineScape direct MKV playback component: LibVLC 3.0.21
+Copyright (c) VideoLAN and contributors.
+Official Windows x64 package: https://download.videolan.org/pub/videolan/vlc/3.0.21/win64/vlc-3.0.21-win64.zip
+SHA256: a0b7ec02b50adf6417eed014fb8df50af39690505a4225b85b3dc2ed17d14843
+
+LibVLC and libvlccore use LGPL v2.1 or later (COPYING.LIB).
+The official VLC distribution includes plugins under various licenses; see COPYING.txt and source licensing headers.
+CineScape dynamically loads LibVLC; compatible DLLs and plugins may be replaced.
+No standalone VLC interface or VLC installation is required.
+
+The included vlc-3.0.21.tar.xz is the upstream source archive:
+https://download.videolan.org/pub/videolan/vlc/3.0.21/vlc-3.0.21.tar.xz
+Dependency build recipes and source locations are in contrib/src inside that archive.
+
+MKV is decoded on demand with LibVLC, using its audio clock. No whole-film conversion, generated movie or temporary movie cache is used.
+Frames are transferred to the cinema screen, fitted inside 1920x1080 with black bars as needed.
+This integration uses CPU decoding and memory frame callbacks; it does not promise hardware decoding, HDR tone mapping or high-frame-rate 4K playback.
+Subtitles and track switching are currently disabled.
