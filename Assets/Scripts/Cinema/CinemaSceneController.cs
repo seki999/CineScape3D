@@ -12,6 +12,15 @@ namespace CineScape
         public Vector3 ScreenCenter => new Vector3(0, 5.5f, 1.05f);
         public Transform VideoSurface { get; private set; }
         Material wall, seat, metal, floor, glow, trim, headrest;
+        Mesh backMesh, cushionMesh, headMesh, armMesh;
+        GameObject Soft(string name,Vector3 position,Mesh mesh,Material material)
+        {
+            var o=new GameObject(name,typeof(MeshFilter),typeof(MeshRenderer));
+            o.transform.SetParent(transform,false);o.transform.localPosition=position;
+            o.GetComponent<MeshFilter>().sharedMesh=mesh;
+            var renderer=o.GetComponent<MeshRenderer>();renderer.sharedMaterial=material;renderer.shadowCastingMode=ShadowCastingMode.Off;
+            return o;
+        }
         Material Mat(string name, Color color, bool unlit = false)
         {
             var template = Resources.Load<Material>(unlit ? "CinemaUnlit" : "CinemaLit");
@@ -35,6 +44,11 @@ namespace CineScape
             floor = Mat("地毯", new Color(.14f,.105f,.085f));
             trim=Mat("墙面立体线条",new Color(.19f,.16f,.13f));
             glow = Mat("暖色通道灯", new Color(.75f,.37f,.12f), true);
+            seat.SetFloat("_Smoothness",.24f);headrest.SetFloat("_Smoothness",.28f);
+            backMesh=UpholsteredSeatMesh.Create(new Vector3(1,1.12f,.38f),.18f,true);
+            cushionMesh=UpholsteredSeatMesh.Create(new Vector3(.96f,.3f,.88f),.145f);
+            headMesh=UpholsteredSeatMesh.Create(new Vector3(.8f,.34f,.2f),.095f);
+            armMesh=UpholsteredSeatMesh.Create(new Vector3(.19f,.21f,.86f),.095f);
             Box("地面", new Vector3(0,-.2f,15), new Vector3(24,.4f,30), floor);
             Box("天花板", new Vector3(0,11,15), new Vector3(24,.3f,30), wall);
             Box("前墙", new Vector3(0,5.5f,0), new Vector3(24,11,.4f), wall);
@@ -86,13 +100,13 @@ namespace CineScape
                 {
                     float x=(col-(SeatsPerRow-1)*.5f)*1.24f;
                     // 中央为连续座位区，过道只在两侧。
-                    Box("坐垫",new Vector3(x,y+.58f,z),new Vector3(.92f,.22f,.8f),seat);
-                    var back=Box("立体靠背",new Vector3(x,y+1.13f,z+.42f),new Vector3(.96f,1.1f,.24f),seat);
-                    back.transform.localRotation=Quaternion.Euler(-7,0,0);
-                    var cushion=Box("座椅头枕",new Vector3(x,y+1.42f,z+.35f),new Vector3(.76f,.3f,.12f),headrest);
-                    cushion.transform.localRotation=Quaternion.Euler(-7,0,0);
+                    Soft("坐垫",new Vector3(x,y+.58f,z),cushionMesh,seat);
+                    var back=Soft("立体靠背",new Vector3(x,y+1.13f,z+.42f),backMesh,seat);
+                    back.transform.localRotation=Quaternion.Euler(7,0,0);
+                    var cushion=Soft("座椅头枕",new Vector3(x,y+1.43f,z+.18f),headMesh,headrest);
+                    cushion.transform.localRotation=Quaternion.Euler(7,0,0);
                     Box("座椅基座",new Vector3(x,y+.24f,z),new Vector3(.55f,.48f,.5f),metal);
-                    for(int s=-1;s<=1;s+=2) Box("扶手",new Vector3(x+s*.51f,y+.82f,z),new Vector3(.14f,.17f,.85f),metal);
+                    for(int s=-1;s<=1;s+=2) Soft("软包扶手",new Vector3(x+s*.52f,y+.82f,z),armMesh,headrest);
                 }
             }
             RenderSettings.ambientMode = AmbientMode.Flat;
@@ -101,6 +115,7 @@ namespace CineScape
         void OnDestroy()
         {
             foreach(var m in new[]{wall,seat,metal,floor,glow,trim,headrest}) if(m != null) Destroy(m);
+            foreach(var mesh in new[]{backMesh,cushionMesh,headMesh,armMesh}) if(mesh!=null)Destroy(mesh);
         }
     }
 }

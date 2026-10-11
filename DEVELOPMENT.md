@@ -33,3 +33,10 @@ MKV 当前采用 CPU 解码和内存帧回调，画面按比例缩放到最多 1
 
 本次影院更新的独立 Windows 播放器测试 2 项通过、0 失败，验证中央 117 座/9 个中央座位、矩形银幕、远近移动、校正开关不中断 MKV 播放和原有暂停/跳转/重播。结果为 Builds/player-cinema.xml，编辑器测试为 Builds/editmode-keystone.xml。实际渲染预览保存在 Builds/cinema-preview。不同 DPI 与新面板的人工操作仍未验收。
 
+
+## 圆角软包座椅更新（2026-10-11，已构建）
+
+座椅采用共享的真实圆角网格：厚靠背、拱形顶边、轻微后仰、鼓起的软包表面、圆角坐垫及软扶手。中央座位和两侧过道布局保持不变。
+
+许可证恢复后，Unity Windows x64 构建成功；PlayMode 影院布局/银幕校正测试 1 项通过，生成远近两张实际渲染预览并完成目视检查。新版 EXE 启动检查通过，日志未发现异常。静态检查为 14 个 C# 文件、12 项配置检查，0 错误。交付文件为 Builds/Windows-Seats/CineScape3D.exe 和 Builds/CineScape3D-Windows-x64-Seats.zip。
+
