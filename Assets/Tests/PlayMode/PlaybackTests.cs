@@ -147,9 +147,10 @@ namespace CineScape.Tests
             Assert.That(video,Is.Not.Null);Assert.That(distance,Is.Not.Null);
             float originalDistance=distance.Value;
             video.Open(path);
-            float deadline=Time.realtimeSinceStartup+30;
+            float deadline=Time.realtimeSinceStartup+10;
             while(!video.Ready && Time.realtimeSinceStartup<deadline) yield return null;
             Assert.That(video.Ready,Is.True,video.Status);
+            Assert.That(video.UsesDirectDecoder,Is.True,"MP4/MKV 应使用内置解码器。");
             yield return new WaitForSecondsRealtime(1);
             Assert.That(video.Playing,Is.True,video.Status);Assert.That(video.Time,Is.GreaterThan(.1));
             Assert.That(video.AudioTracks,Is.GreaterThan(0));
@@ -168,7 +169,8 @@ namespace CineScape.Tests
             finally {RenderTexture.active=previous;UnityEngine.Object.Destroy(snapshot);}
             double before=video.Time;
             distance.Set(1);
-            yield return new WaitForSecondsRealtime(.4f);
+            deadline=Time.realtimeSinceStartup+2;
+            while(video.Time<=before+.1&&Time.realtimeSinceStartup<deadline)yield return null;
             Assert.That(video.Playing,Is.True);Assert.That(video.Time,Is.GreaterThan(before+.1));
             Assert.That(distance.transform.position.z,Is.InRange(5.53f-.0001f,29.05f+.0001f));
             var center=distance.GetComponent<UnityEngine.Camera>().WorldToViewportPoint(new Vector3(0,5.5f,1.05f));

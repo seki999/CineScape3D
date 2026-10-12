@@ -4,7 +4,7 @@ Windows 本地电影播放器：实时生成影院墙壁、舞台、立体酒红
 
 ## 开始使用
 
-已生成 Windows x64 程序：`Builds/Windows-Cinema/CineScape3D.exe`。分发包为 `Builds/CineScape3D-Windows-x64-Cinema.zip`，请完整解压后双击 EXE，保留旁边的 Data、DLL、MonoBleedingEdge 等文件。运行程序无需安装 Unity Editor，也无需 Unity 账号。
+已生成 Windows x64 程序：`Builds/Windows-MP4/CineScape3D.exe`。分发包为 `Builds/CineScape3D-Windows-x64-MP4.zip`，请完整解压后双击 EXE，保留旁边的 Data、DLL、MonoBleedingEdge 等文件。运行程序无需安装 Unity Editor，也无需 Unity 账号。
 
 修改源码时使用 **Unity 6 LTS 6000.0.23f1**。本机编辑器位于 `D:\CineScapeBuildTools\Unity-6000.0.23f1\Editor`，可在 Unity Hub 中 Locate 添加。添加当前项目根目录，打开已生成的 `Assets/Scenes/Cinema.unity`，按 Play。需要重建配置时选择 `CineScape > 初始化项目`。详情见 [BUILD.md](BUILD.md)。
 
@@ -12,7 +12,7 @@ Windows 本地电影播放器：实时生成影院墙壁、舞台、立体酒红
 
 ## 操作
 
-点击“打开视频”选择本地 MP4 或 MKV。MKV 使用随程序携带的 LibVLC 直接解码，打开后按需读取并播放，不再整片转码，也不生成临时影片；原文件不变。画面按比例送到 1080p 银幕，音频由同一解码后端同步输出。字幕和其他音轨不会显示或切换。MP4 直接由 Unity 和 Windows 解码，兼容性仍取决于文件编码。加载有提示及 30 秒超时；无声视频也可显示画面。银幕使用 Unlit 材质与 1080p RenderTexture，宽高比采用 FitInside 留黑。
+点击“打开视频”选择本地 MP4 或 MKV。MP4 和 MKV 使用随程序携带的 LibVLC 直接解码，打开后按需读取并播放，不再整片转码，也不生成临时影片；原文件不变。画面按比例送到 1080p 银幕，音频由同一解码后端同步输出。字幕和其他音轨不会显示或切换。MP4 已改用内置解码器，避免系统解码器在准备阶段卡住。加载有提示及 30 秒超时；无声视频也可显示画面。银幕使用 Unlit 材质与 1080p RenderTexture，宽高比采用 FitInside 留黑。
 
 控制栏提供播放/暂停、停止、拖动进度、当前/总时长、音量、静音、全屏与设置。停止后清空画面，按播放重新准备当前文件并从头播放。播放结束保持影院与末帧，再按播放重新开始。拖动进度在释放时跳转；某些编码的精确跳转能力受解码器限制。
 
@@ -44,4 +44,3 @@ Windows 本地电影播放器：实时生成影院墙壁、舞台、立体酒红
 
 
 影院加入墙柱、顶梁、灯带、两侧阶梯过道和更清楚的座椅明暗。观看距离 25%～50% 可以看见更多内部空间；靠近银幕则增加影片占比。
-

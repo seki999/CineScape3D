@@ -61,10 +61,12 @@ namespace CineScape
                 if(!File.Exists(path)) { currentPath=null;HasFile=false;Status = "视频文件不存在。"; return; }
                 currentPath = path;
                 HasFile = true; Loading = true; loadingSince = UnityEngine.Time.realtimeSinceStartup;
-                if(string.Equals(Path.GetExtension(path),".mkv",StringComparison.OrdinalIgnoreCase))
+                var extension=Path.GetExtension(path);
+                if(string.Equals(extension,".mkv",StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(extension,".mp4",StringComparison.OrdinalIgnoreCase))
                 {
                     direct = new DirectMkvPlayback();
-                    Status = "正在打开 MKV…";
+                    Status = "正在打开视频…";
                     direct.Open(path,Volume,Muted);
                 }
                 else Prepare(path);
@@ -118,7 +120,7 @@ namespace CineScape
                 try
                 {
                     direct.Upload(screen);
-                    if(direct.Failed) { Failed(player,"无法解码这个 MKV 文件。");return; }
+                    if(direct.Failed) { Failed(player,"无法解码这个视频文件。");return; }
                     if(Loading && direct.HasFrame) { Loading=false;Status=""; }
                     if(direct.Ended && !ended)
                     {

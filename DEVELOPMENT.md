@@ -40,3 +40,11 @@ MKV 当前采用 CPU 解码和内存帧回调，画面按比例缩放到最多 1
 
 许可证恢复后，Unity Windows x64 构建成功；PlayMode 影院布局/银幕校正测试 1 项通过，生成远近两张实际渲染预览并完成目视检查。新版 EXE 启动检查通过，日志未发现异常。静态检查为 14 个 C# 文件、12 项配置检查，0 错误。交付文件为 Builds/Windows-Seats/CineScape3D.exe 和 Builds/CineScape3D-Windows-x64-Seats.zip。
 
+
+## MP4 内置解码更新（2026-10-12）
+
+MP4 与 MKV 共用内置 LibVLC 解码器；增加官方 MP4 解封装插件并更新插件缓存。Unity 系统解码器仍用于其他扩展名。
+
+用户提供的约 1.12 GB MP4 在 10 秒限时内完成首帧准备；影院场景测试通过并生成实际画面预览（Builds/playmode-user-mp4.xml）。H.264/AAC MP4 短片完成播放、音轨识别、非黑画面、距离移动、暂停、跳转、停止重播和播放结束测试（Builds/playmode-mp4-fixed.xml）。暂停及音轨检查不代表人工听测或长时间同步验证。
+
+Windows x64 构建成功，输出 Builds/Windows-MP4/CineScape3D.exe。静态检查 14 个 C# 文件及 12 项配置检查通过。分发包为 Builds/CineScape3D-Windows-x64-MP4.zip。
